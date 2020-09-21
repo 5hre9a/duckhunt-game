@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>DUCK HUNT -a game by 5hre9a</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <style type="text/css">
+      .background {
+        background-image: url("game_background.jpeg");
+        width: 1300px;
+        height: 900px;
+      }
+      .score {
+        position: absolute;
+        top: 700px;
+        left: 980px;
+        font-size: 50px;
+        text-align: right;
+        color: white;
+      }
+    </style>
+
+    <script>
+      $(document).ready(function () {
+        var stats = {
+          hit: 0,
+          score: 0,
+          number_of_bullets: 3,
+        };
+
+        var duck = {
+          x: Math.floor(Math.random() * 1000),
+          y: 400,
+          alive: true,
+        };
+
+        console.log(duck);
+
+        function GameLoop() {
+          duck.y = duck.y - 10;
+          duck.x = duck.x + Math.floor(Math.random() * 20 - 10);
+
+          if (duck.y < -150) {
+            duck.x = Math.floor(Math.random() * 1000);
+            duck.y = 400;
+          }
+
+          $(".duck img").css({
+            "margin-top": duck.y + "px",
+            "margin-left": duck.x + "px",
+          });
+
+          $(".score").html(stats.score);
+        }
+
+        document.onclick = function (e) {
+          if (
+            e.x > duck.x &&
+            e.x < duck.x + 150 &&
+            e.y > duck.y &&
+            e.y < duck.y + 150
+          ) {
+            stats.score += 10;
+          }
+        };
+
+        setInterval(GameLoop, 50);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="background">
+      <div class="duck"><img src="duck.png" /></div>
+
+      <div class="score"></div>
+    </div>
+
+    - have the duck fly/move - when you click the duck, kill the duck -
+    points/score - implement the # of lives - show the dog
+  </body>
+</html>
